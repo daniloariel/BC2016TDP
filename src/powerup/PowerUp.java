@@ -6,7 +6,7 @@ public abstract class PowerUp extends GameObject {
 	
 	public PowerUp(int x, int y){
 		super(x,y);
-		pos=2;
+		pos=1;
 	}
 	
 	

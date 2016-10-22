@@ -1,16 +1,25 @@
 package disparo;
 
-import visitor.Visitor;
-import tanques.*;
+import visitor.*;
+import juego.*;
+import mapa.Celda;
 
 public class DisparoJugador extends Disparo{
 	
-	protected Jugador jugador;
+	protected ObjetoMovil jugador;
 	
-	public DisparoJugador(int velocidad,int x, int y,Jugador jug){
-		super(velocidad,x,y);
-		grafico.setLocation(x*32 +14, y*32 +14);
-		jugador=jug;
+	public DisparoJugador(int velocidad, ObjetoMovil t,Celda c){
+		
+		super(velocidad,t,c);
+		
+		
+		
+		
+		this.visitor = new VisitorDisparoJugador(this);
+		
+		c.getGUI().add(this.getGrafico());
+		
+		MoverDisparo m = new MoverDisparo(this);
 	}
 	
 	
@@ -19,6 +28,6 @@ public class DisparoJugador extends Disparo{
 	}
 	
 	
-	public void disparar(int direccion){}
+	
 
 }

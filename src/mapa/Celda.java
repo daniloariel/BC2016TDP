@@ -12,6 +12,8 @@ public class Celda {
 	
 	protected GameObject [] objetos;
 	
+	private GUI gui;
+	
 	protected int x,y;
 	
 	public Celda(int x, int y, Mapa map){
@@ -20,6 +22,7 @@ public class Celda {
 		for(int i=0; i<4;i++)
 			objetos[i]=null;
 		
+		gui=map.getGUI();
 		mapa=map;
 		this.x=x;
 		this.y=y;
@@ -43,6 +46,10 @@ public class Celda {
 	
 	public int getY(){
 		return y;
+	}
+	
+	public GUI getGUI(){
+		return gui;
 	}
 	
 	

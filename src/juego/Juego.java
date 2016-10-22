@@ -23,7 +23,7 @@ public class Juego {
 		
 		this.gui=gui;
 		
-		mapa = new Mapa();
+		mapa = new Mapa(gui);
 		
 		enemigos = new Enemigo[4];
 		
@@ -43,6 +43,8 @@ public class Juego {
 		agregarJugador();
 		
 		agregarEnemigo();
+		
+		
 		
 	}
 	
@@ -66,21 +68,6 @@ public class Juego {
 				
 			case KeyEvent.VK_SPACE : //disparo
 				direccion = 4;
-				Disparo disp=null;
-				
-				int a = jugador.getCelda().getX();
-				int b = jugador.getCelda().getY();
-				
-				if(jugador.getDireccion()==0){
-				  disp= new DisparoJugador(15,a, b-1,jugador);
-				  disp.setCelda(mapa.getCelda(a,b-1));
-				}
-				if(jugador.getDireccion()==1){
-					disp=new DisparoJugador(15,a, b+1,jugador);
-					disp.setCelda(mapa.getCelda(a, b+1));
-				}
-				mapa.agregarTanque(disp.getCelda().getX(), disp.getCelda().getY(), jugador);
-				gui.add(disp.getGrafico());
 				break;
 		}
 		
@@ -100,7 +87,6 @@ public class Juego {
 		mapa.agregarTanque(1, 1, e);
 		e.setCelda(mapa.getCelda(1, 1));
 		gui.add(e.getGrafico());
-		
 		
 	}
 	

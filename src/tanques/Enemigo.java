@@ -25,6 +25,8 @@ public class Enemigo extends ObjetoMovil{
 		
 		this.visitor = new VisitorEnemigo(this);
 		
+		MoverEnemigo m = new MoverEnemigo(this);
+		
 		
 	}
 	

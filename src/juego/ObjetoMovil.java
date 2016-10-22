@@ -18,7 +18,10 @@ public abstract class ObjetoMovil extends GameObject {
 	protected  Thread t;
 	
 	public ObjetoMovil(int velocidad, int x, int y){
+		
 		super(x,y);
+		
+		direccion=0;
 		
 		this.imagenes = new Icon[4];
 		
@@ -35,34 +38,31 @@ public abstract class ObjetoMovil extends GameObject {
 	
 	public void run(){
 		
-		int x = this.x*32;
-		int y= this.y*32;
-		
 		moviendo=true;
 		for(int i=0;i<32;i++){
 			switch(direccion){
 			case 0: //arriba 
 				grafico.setIcon(imagenes[0]);
 				
-				grafico.setBounds(x,y-1,32,32);
+				grafico.setBounds(grafico.getX(),grafico.getY()-1,32,32);
 				break;
 			case 1: //abajo
 				grafico.setIcon(imagenes[1]);
 				
-				grafico.setBounds(x,y+1,32,32);
+				grafico.setBounds(grafico.getX(),grafico.getY()+1,32,32);
 				break;
 			
 			case 2://izquierda
 				grafico.setIcon(imagenes[2]);
-				grafico.setBounds(x-1,y,32,32);
+				grafico.setBounds(grafico.getX()-1,grafico.getY(),32,32);
 				break;
 			case 3://derecha
 				grafico.setIcon(imagenes[3]);
-				grafico.setBounds(x+1,y,32,32);
+				grafico.setBounds(grafico.getX()+1,grafico.getY(),32,32);
 				break;
 			}
 			try{
-				Thread.sleep(13);
+				Thread.sleep(15);
 			}catch(InterruptedException e){ e.printStackTrace();}
 		}
 		moviendo=false;		
@@ -84,8 +84,6 @@ public abstract class ObjetoMovil extends GameObject {
 		int i=0;
 		
 		switch(direccion){
-		
-		
 		
 		case 0 : //arriba
 			if(!moviendo){
@@ -190,19 +188,26 @@ public abstract class ObjetoMovil extends GameObject {
 				
 				if(!atravesable){
 					if(aux.getObjeto(i).aceptar(visitor)){
+						
 						aux.setObjeto(this,pos);
 						celda.setObjeto(null,pos);
 						celda=aux;
 						moverGrafico(direccion);
 					}
 				}else{
+					
 					aux.setObjeto(this,pos);
 					celda.setObjeto(null,pos);
 					celda=aux;
 					moverGrafico(direccion);
 				}
+				
+				System.out.println("me movi");
 			}
-			break;			
+			break;
+			
+		case 4:
+			Disparo disp = new DisparoJugador(15,this,celda);
 		
 		
 		}

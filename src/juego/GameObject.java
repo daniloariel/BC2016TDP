@@ -21,9 +21,15 @@ public abstract class GameObject implements Runnable {
 		grafico=new JLabel();
 		grafico.setBounds(x*32,y*32,32, 32);
 		grafico.setVisible(true);
+		run=true;
+	}
+	
+	public boolean getRun(){
+		return run;
 	}
 	
 	public void destruir(){
+		grafico.setIcon(null);
 		celda=null;
 		run=false;
 	}

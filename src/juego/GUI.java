@@ -71,8 +71,7 @@ public class GUI extends JFrame {
 		
 	
 	protected void mover(KeyEvent key){
-		j.mover(key.getKeyCode());
 		
-		this.repaint();
+		j.mover(key.getKeyCode());
 	}
 }

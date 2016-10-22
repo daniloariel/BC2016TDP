@@ -11,11 +11,15 @@ import juego.*;
 public class Mapa {
 	protected Celda[][]M;
 	
-	public Mapa(){
+	private GUI gui;
+	
+	public Mapa(GUI g){
 		try{
 			File archivo = new File(this.getClass().getResource("/imagenes/mapa.txt").getFile());
 			FileReader fr= new FileReader(archivo);
 			BufferedReader br = new BufferedReader(fr);
+			
+			gui=g;
 			
 			
 			M = new Celda[20][20];
@@ -80,4 +84,7 @@ public class Mapa {
 		return M[i][j];
 	}
 	
+	public GUI getGUI(){
+		return gui;
+	}
 }
