@@ -1,9 +1,0 @@
-package factoryenemigo;
-import tanques.*;
-public class FabricaEnemigoRapido implements FabricaEnemigo {
-	
-	public Enemigo crearEnemigoRapido(){
-		return new EnemigoRapido();
-	}
-
-}

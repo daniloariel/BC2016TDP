@@ -1,7 +1,0 @@
-package tanques;
-
-public class EnemigoDePoder extends Enemigo{
-	
-	public EnemigoDePoder(){}
-
-}

@@ -1,7 +1,0 @@
-package tanques;
-
-public interface FabricaEnemigo {
-	
-	public Enemigo crearEnemigo();
-
-}

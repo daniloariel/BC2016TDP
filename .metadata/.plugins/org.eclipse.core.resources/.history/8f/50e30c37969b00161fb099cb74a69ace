@@ -1,5 +1,0 @@
-package Disparo;
-
-public class DisparoJugador extends Disparo {
-
-}

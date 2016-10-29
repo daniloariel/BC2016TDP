@@ -1,5 +1,0 @@
-package tanques;
-
-public abstract class Tanque extends ObjetoMovil{
-
-}

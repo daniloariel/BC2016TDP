@@ -1,9 +1,0 @@
-package factoryenemigo;
-
-public class FabricaEnemigoRapido implements FabricaEnemigo {
-	
-	public EnemigoRapido crearEnemigoRapido(){
-		return new EnemigoRapido();
-	}
-
-}
