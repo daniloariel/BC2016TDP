@@ -1,0 +1,23 @@
+package mapa;
+
+public class Celda {
+	
+	private GameObject []objetos;
+	private int x;
+	private int y;
+	
+	private Mapa mapa;
+
+	
+	public Celda(int x, int y, Mapa map){
+		objetos= new Objetos[4];
+		for(int i=0; i<4;i++)
+			objetos[i]=null;
+		
+		mapa=map;
+		
+		this.x=x;
+		this.y=y;
+		
+	}
+}

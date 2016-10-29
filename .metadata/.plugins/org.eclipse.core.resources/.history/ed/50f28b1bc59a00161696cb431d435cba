@@ -1,0 +1,10 @@
+package obstaculos;
+
+public class Obstaculo extends GameObject {
+	
+	public Obstaculo(Celda c, int x, int y){
+		super(c,x,y);
+		pos=1;
+	}
+
+}

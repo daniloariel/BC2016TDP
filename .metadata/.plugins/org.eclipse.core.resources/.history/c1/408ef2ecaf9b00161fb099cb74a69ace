@@ -1,0 +1,25 @@
+package disparo;
+
+import mapa.*;
+import juego.*;
+import visitor.*;
+
+public class DisparoJugador extends Disparo {
+	
+	public DisparoJugador(Celda c , int x , int y, ObjetoMovil tanque){
+		
+		super(c,x,y,tanque);
+		
+		this.visitor = new VisitorDisparoJugador(this);
+		
+		MoverDisparo m = new MoverDisparo(this);
+		
+		isRun = true;
+		
+	}
+	
+	public boolean aceptar(Visitor vis){
+		return vis.visitarDisparoJugador(this);
+	}
+
+}

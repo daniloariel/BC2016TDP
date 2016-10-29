@@ -1,0 +1,186 @@
+package juego;
+
+import javax.swing.*;
+
+import mapa.*;
+
+public abstract class ObjetoMovil extends GameObject {
+	
+	protected Thread t;
+	
+	protected Icon [] imagenes;
+	protected int direccion;
+	protected boolean moviendo = false;
+	
+	protected int x;
+	protected int y;
+	
+	public ObjetoMovil(Celda c, int x, int y){
+		super(c,x,y);
+		
+		t = new Thread();
+		
+		imagenes = new Icon[4];
+		direccion=0;
+	}
+	
+	public int getDireccion(){
+		return direccion;
+	}
+	
+	public void moverLogico(int direccion){
+		this.direccion=direccion;
+		
+		Celda aux; 
+		 x = celda.getX();
+		 y = celda.getY();
+		 
+		boolean atravesable=true;
+		
+		int i=0;
+		
+		switch(direccion){
+		
+		case 0 : //arriba
+			
+			if(!moviendo){
+				aux=mapa.getCelda(x, y-1);
+				
+				while(atravesable && i<4){
+					if(aux.getObjeto(i)!=null)
+						atravesable = false;
+					else{
+						atravesable=true; 
+						i++;
+					}
+				}
+				
+				System.out.println(i+"");
+				
+				if(!atravesable){ //no es piso
+					if(aux.getObjeto(i).aceptar(visitor)){
+						aux.setObjeto(this,pos);
+						celda.setObjeto(null,pos);
+						celda=aux;
+						moverGrafico(direccion);
+						
+					}
+				}else{ //es piso
+					aux.setObjeto(this,pos);
+					celda.setObjeto(null,pos);
+					celda=aux;
+					moverGrafico(direccion);
+				}
+			}
+			break;
+		case 1: //abajo
+			if(!moviendo){
+				aux= mapa.getCelda(x, y+1);
+				
+				while(atravesable && i<4){
+					if(aux.getObjeto(i)!=null)
+						atravesable = false;
+					else{
+						atravesable=true; 
+						i++;
+					}
+				}
+				
+				if(!atravesable){
+					if(aux.getObjeto(i).aceptar(visitor)){
+						aux.setObjeto(this,pos);
+						celda.setObjeto(null,pos);
+						celda=aux;
+						moverGrafico(direccion);
+					}
+				}else{
+					aux.setObjeto(this,pos);
+					celda.setObjeto(null,pos);
+					celda=aux;
+					moverGrafico(direccion); 
+				}
+			}
+			break;
+		case 2: //izquierda
+			if(!moviendo){
+				aux= mapa.getCelda(x-1,y);
+				
+				while(atravesable && i<4){
+					if(aux.getObjeto(i)!=null)
+						atravesable = false;
+					else{
+						atravesable=true; 
+						i++;
+					}
+				}
+				
+				if(!atravesable){
+					if(aux.getObjeto(i).aceptar(visitor)){
+						aux.setObjeto(this,pos);
+						celda.setObjeto(null,pos);
+						celda=aux;
+						moverGrafico(direccion);
+					}
+				}else{
+					aux.setObjeto(this,pos);
+					celda.setObjeto(null,pos);
+					celda=aux;
+					moverGrafico(direccion);
+				}
+			}
+			break;
+			
+		case 3: //derecha
+			if(!moviendo){
+				aux=mapa.getCelda(x+1, y);
+				
+				while(atravesable && i<4){
+					if(aux.getObjeto(i)!=null)
+						atravesable = false;
+					else{
+						atravesable=true; 
+						i++;
+					}
+				}
+				
+				if(!atravesable){
+					if(aux.getObjeto(i).aceptar(visitor)){
+						
+						aux.setObjeto(this,pos);
+						celda.setObjeto(null,pos);
+						celda=aux;
+						moverGrafico(direccion);
+					}
+				}else{
+					
+					aux.setObjeto(this,pos);
+					celda.setObjeto(null,pos);
+					celda=aux;
+					moverGrafico(direccion);
+				}
+				
+				System.out.println("me movi");
+			}
+			break;
+			
+//		case 4:
+//			Disparo disp = new DisparoJugador(15,this,celda);
+		
+		
+		}
+	
+
+	}
+	}
+	
+	public void moverGrafico(){
+		t.start();
+	}
+	
+	public void run(){
+		
+	}
+	
+	
+
+}

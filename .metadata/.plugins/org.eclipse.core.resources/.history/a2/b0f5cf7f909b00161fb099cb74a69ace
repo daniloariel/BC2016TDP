@@ -1,0 +1,27 @@
+package tanques;
+
+import javax.swing.*;
+import mapa.*;
+import visitor.*;
+
+public class Enemigo extends Tanque {
+	
+	public Enemigo(Celda c, int x, int y){
+		super(c,x,y);
+		
+		
+		
+		this.imagenes[0] = new ImageIcon(this.getClass().getResource("/imagenes/up2.png"));
+		this.imagenes[1] = new ImageIcon(this.getClass().getResource("/imagenes/down2.png"));
+		this.imagenes[2] = new ImageIcon(this.getClass().getResource("/imagenes/left2.png"));
+		this.imagenes[3] = new ImageIcon(this.getClass().getResource("/imagenes/right2.png"));
+		
+		visitor = new VisitorEnemigo(this);
+		
+	}
+	
+	public boolean aceptar(Visitor vis){
+		return vis.visitarEnemigo(this);
+	}
+
+}

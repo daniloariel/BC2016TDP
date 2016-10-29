@@ -1,0 +1,9 @@
+package tanques;
+
+import tanques.Enemigo;
+
+public interface FabricaEnemigo {
+	
+	public Enemigo crearEnemigo();
+
+}

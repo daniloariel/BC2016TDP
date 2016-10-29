@@ -1,0 +1,18 @@
+package tanques;
+
+import mapa.*;
+import juego.*;
+
+public abstract class Tanque extends ObjetoMovil{
+	
+	public Tanque(Celda c, int x, int y){
+		super(c,x,y);
+		pos=0;
+		
+	}
+	
+	public int getPos(){
+		return pos;
+	}
+
+}

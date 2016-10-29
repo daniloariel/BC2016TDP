@@ -1,0 +1,9 @@
+package tanques;
+
+public class EnemigoBasico extends Enemigo {
+	
+	public EnemigoBasico(){
+		
+	}
+
+}

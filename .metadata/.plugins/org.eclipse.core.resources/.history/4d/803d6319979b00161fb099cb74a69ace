@@ -1,0 +1,5 @@
+package disparo;
+
+public class DisparoEnemigo extends Disparo{
+
+}

@@ -1,0 +1,33 @@
+package juego;
+
+import tanques.*;
+
+import javax.swing.JLabel;
+
+import mapa.*;
+
+public class Juego {
+	
+	private Jugador jugador;
+	private Enemigo[] enemigos;
+	private Mapa mapa;
+	private GUI gui;
+	
+	public Juego (GUI gui){
+		
+		this.gui = gui;
+		
+		mapa = new Mapa();
+		
+		for(int i = 0; i<mapa.nroFilas();i++)
+			for(int j = 0; j<mapa.nroColumnas(); j++){
+				if(mapa.getObjeto(i, j, 1)!=null){
+					JLabel grafico = mapa.getObjeto(i, j, 1).getGrafico();
+					gui.add(grafico);
+				}
+			}
+		
+		
+	}
+
+}

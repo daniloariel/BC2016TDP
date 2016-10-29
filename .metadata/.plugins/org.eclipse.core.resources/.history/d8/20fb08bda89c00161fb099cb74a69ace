@@ -1,0 +1,10 @@
+package factoryenemigo;
+import tanques.*;
+public class FabricaEnemigoDePoder implements FabricaEnemigo{
+	
+	public Enemigo crearEnemigo(){
+		return new EnemigoDePoder();
+	}
+	
+
+}

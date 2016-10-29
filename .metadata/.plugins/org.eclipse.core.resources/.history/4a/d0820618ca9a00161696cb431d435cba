@@ -1,0 +1,25 @@
+package tanques;
+
+import javax.swing.*;
+import mapa.*;
+
+public class Jugador extends Tanque{
+	
+	protected Nivel nivel;
+	
+	public Jugador(Celda c, int x , int y){
+		super(c,x,y);
+		
+		this.imagenes[0] = new ImageIcon(this.getClass().getResource("/imagenes/up.png"));
+		this.imagenes[1] = new ImageIcon(this.getClass().getResource("/imagenes/down.png"));
+		this.imagenes[2] = new ImageIcon(this.getClass().getResource("/imagenes/left.png"));
+		this.imagenes[3] = new ImageIcon(this.getClass().getResource("/imagenes/right.png"));
+		
+		nivel = new Nivel1();
+	}
+	
+	public void subirNivel(){
+		nivel = nivel.subiNivel();
+	}
+
+}

@@ -1,0 +1,13 @@
+package tanques;
+
+public interface FabricaEnemigo {
+	
+	public EnemigoBlindado crearEnemigoBlindado();
+	
+	public EnemigoDePoder crearEnemigoDePoder();
+	
+	public EnemigoBasico crearEnemigoBasico();
+	
+	public EnemigoRapido crearEnemigoRapido();
+
+}

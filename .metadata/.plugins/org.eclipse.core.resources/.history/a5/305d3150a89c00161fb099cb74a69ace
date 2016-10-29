@@ -1,0 +1,7 @@
+package tanques;
+
+public class EnemigoRapido extends Enemigo{
+	
+	public EnemigoRapido(){}
+
+}

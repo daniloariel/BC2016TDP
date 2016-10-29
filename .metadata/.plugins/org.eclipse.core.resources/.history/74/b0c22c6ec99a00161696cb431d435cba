@@ -1,0 +1,14 @@
+package tanques;
+
+public class Nivel4 {
+	
+	public Nivel4 (boolean ds, int r, int v, int vd){
+		super(ds,r,v,vd);
+	}
+	
+	
+	public Nivel subirNivel(){
+		return new Nivel4();
+	}
+
+}

@@ -1,0 +1,12 @@
+package tanques;
+import mapa.*;
+public class EnemigoDePoder extends Enemigo{
+	
+	public EnemigoDePoder(Celda c, int x, int y){
+		super(c,x,y);
+		velocidad = 2;
+		puntos = 300;
+		resistencia = 1;
+	}
+
+}

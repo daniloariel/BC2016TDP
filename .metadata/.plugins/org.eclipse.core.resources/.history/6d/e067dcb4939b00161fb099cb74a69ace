@@ -1,0 +1,5 @@
+package Disparo;
+
+public abstract class Disparo {
+
+}
