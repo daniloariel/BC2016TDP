@@ -193,6 +193,9 @@ public class Juego implements Runnable{
 
 		while(!fin){
 			
+			System.out.println(""+mapa.getEnemigos().size());
+			System.out.println(""+cantEnemigosMuertos);
+			
 			if(jugador.getVidas()==0){
 				gameOver();
 			}
