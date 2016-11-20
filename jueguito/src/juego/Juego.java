@@ -17,11 +17,18 @@ public class Juego implements Runnable{
 	
 	private int puntos;
 	
-	private boolean perdi;
+	private boolean fin;
+	
+	private int cantEnemigosMuertos;
+	
+	private int cantEnemigosMuertosTotal;
 	
 	public Juego (){
 		
-		perdi = false;
+		fin = false;
+		
+		cantEnemigosMuertos=0;
+		cantEnemigosMuertosTotal=0;
 		
 		puntos=0;
 		
@@ -82,6 +89,11 @@ public class Juego implements Runnable{
 		
 	}
 	
+	public void incEnemigosMuertos(){
+		cantEnemigosMuertos++;
+		cantEnemigosMuertosTotal++;
+	}
+	
 	public void agregarJugador(){
 		jugador = new Jugador(mapa.getCelda(4, 17),4,17,this);
 		gui.add(jugador.getGrafico());
@@ -133,17 +145,22 @@ public class Juego implements Runnable{
 	
 	public void gameOver(){
 		
-		perdi = true;
+		fin = true;
 		jugador=null;
 		t.interrupt();
-		gui.gameOver();
-		
-		
+		gui.terminar(false);
+	}
+	
+	public void ganar(){
+		fin = true;
+		jugador = null;
+		t.interrupt();
+		gui.terminar(true);
 	}
 	
 	public void reset(){
 		
-				perdi = false;
+				fin = false;
 				
 				puntos=0;
 				
@@ -174,40 +191,33 @@ public class Juego implements Runnable{
 	
 	public void run(){
 
-		int cont =0;
-		
-		while(!perdi){		
-			
-			
+		while(!fin){
 			
 			if(jugador.getVidas()==0){
 				gameOver();
 			}
-			System.out.println(""+mapa.getEnemigos().size());
 			
 			
-			if(mapa.getEnemigos().size()<4){	
-				cont++;
-				
-				if(cont == 4){
-					mapa.agregarPowerUp();
-					cont=0;
-				}
-				
-				try{
-					Thread.sleep(5000);
-					}catch(InterruptedException e){e.printStackTrace();}
-				mapa.agregarEnemigo();
+			if (cantEnemigosMuertos == 4){
+				mapa.agregarPowerUp();
+				cantEnemigosMuertos=0;
 			}
+			
+			if(cantEnemigosMuertosTotal==16){
+				ganar();
+			}
+			if(mapa.getEnemigos().size()<4){
+				try{
+					Thread.sleep(2000);
+					}catch(InterruptedException e){e.printStackTrace();}
+				
+					mapa.agregarEnemigo();
+			}
+		}
 				
 			
 			
 			
-		}
-		
 	}
-	
-	
-	
-
+		
 }

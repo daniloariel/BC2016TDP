@@ -34,11 +34,12 @@ public class VisitorEnemigo extends Visitor{
 	public boolean visitarDisparoJugador(DisparoJugador d) {
 		// TODO Auto-generated method stub
 		
-		objeto.getCelda().getMapa().getEnemigos().remove(objeto);
+		Enemigo e = (Enemigo) objeto;
 		
-		d.getJugador().getJuego().sumarPuntos(objeto.recibirDisparo());
+		d.getJugador().getJuego().sumarPuntos(e.recibirDisparo());
 		
-		
+		if(!e.estaVivo())
+			d.getJugador().getJuego().incEnemigosMuertos();
 		
 		d.destruir();
 		

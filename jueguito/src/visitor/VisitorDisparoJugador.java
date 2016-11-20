@@ -28,9 +28,10 @@ public class VisitorDisparoJugador extends Visitor {
 		
 		DisparoJugador d = (DisparoJugador) objeto;
 		
-		enemigo.getCelda().getMapa().remove(enemigo);
-		
 		d.getJugador().getJuego().sumarPuntos(enemigo.recibirDisparo());
+		
+		if (!enemigo.estaVivo())
+			d.getJugador().getJuego().incEnemigosMuertos();
 		
 		
 		
@@ -61,8 +62,8 @@ public class VisitorDisparoJugador extends Visitor {
 	@Override
 	public boolean visitarAguila(Aguila aguila) {
 		// TODO Auto-generated method stub
-		DisparoJugador d = (DisparoJugador)objeto;
-		d.getJugador().getJuego().gameOver();
+		//DisparoJugador d = (DisparoJugador)objeto;
+		aguila.activar();
 		this.objeto.destruir();
 		aguila.destruir();
 		return false;

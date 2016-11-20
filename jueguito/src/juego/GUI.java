@@ -170,9 +170,11 @@ public class GUI extends JFrame {
 	}
 	
 	public void actualizarNivel(){
-		numero++;
-		etiquetaNumeroNivel.setIcon(numeros[numero]);
-		repaint();
+		if(numero<4){
+			numero++;
+			etiquetaNumeroNivel.setIcon(numeros[numero]);
+			repaint();
+		}
 	}
 	
 	public void reiniciarNiveles(){
@@ -201,15 +203,17 @@ public class GUI extends JFrame {
 		repaint();
 	}
 	
-	public void gameOver(){
+	public void terminar(boolean gane){
 		
 		terminar = true;
-		
-		int opcion = (JOptionPane.showConfirmDialog(null, "¿Jugar de nuevo?"));
-		
-		
+		int opcion;
+		if(!gane)
+			opcion = (JOptionPane.showConfirmDialog(null, "Perdiste, ¿Jugar de nuevo?"));
+			else
+				opcion = (JOptionPane.showConfirmDialog(null, "¡Ganaste!, ¿Jugar de nuevo?"));
 		
 		if (JOptionPane.OK_OPTION == opcion){
+			this.dispose();
 			juego.reset();
 		}
 	        else{
@@ -217,6 +221,10 @@ public class GUI extends JFrame {
 	        }
 		
 		
+	}
+	
+	public Juego getJuego(){
+		return juego;
 	}
 	
 

@@ -7,6 +7,8 @@ public abstract class Enemigo extends Tanque {
 	
 	protected int puntos;
 	
+	protected boolean vivo = true;
+	
 	protected MoverEnemigo m;
 	
 	protected Enemigo(Celda c, int x, int y, int p){
@@ -41,7 +43,9 @@ public abstract class Enemigo extends Tanque {
 	public int recibirDisparo(){
 		
 		if(getResistencia()==1){
-			destruir();
+			this.destruir();
+			vivo = false;
+			celda.getMapa().getEnemigos().remove(this);
 			return puntos;
 		}
 		
@@ -53,6 +57,10 @@ public abstract class Enemigo extends Tanque {
 	
 	public void decrementarResistencia(){
 		resistencia--;
+	}
+	
+	public boolean estaVivo(){
+		return vivo;
 	}
 }
 

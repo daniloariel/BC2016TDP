@@ -18,6 +18,12 @@ public class Aguila extends Obstaculo{
 	
 	public boolean aceptar (Visitor vis){
 		return vis.visitarAguila(this);
-	}	
+	}
+	
+	public void activar(){
+		
+		this.getCelda().getMapa().getGUI().getJuego().gameOver();
+		
+	}
 	
 }

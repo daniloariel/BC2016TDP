@@ -31,7 +31,7 @@ public class VisitorDisparoEnemigo extends Visitor{
 	@Override
 	public boolean visitarAguila(Aguila aguila) {
 		// TODO Auto-generated method stub
-		aguila.getCelda().getMapa().getGUI().gameOver();
+		aguila.activar();
 		
 		objeto.destruir();
 		aguila.destruir();
