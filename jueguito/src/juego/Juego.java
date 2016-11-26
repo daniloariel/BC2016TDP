@@ -189,6 +189,11 @@ public class Juego implements Runnable{
 				cantEnemigosMuertos=0;
 				cantEnemigosMuertosTotal= 0;
 				
+				t.interrupt();
+				t= new Thread(this);
+				t.start();
+				
+				
 				agregarJugador();
 				fin = false;
 				gui.setVisible(true);
