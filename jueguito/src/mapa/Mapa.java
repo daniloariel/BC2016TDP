@@ -177,6 +177,11 @@ public class Mapa {
 		return enemigos;
 	}
 	
+	public int cantidadEnemigos(){
+		return enemigos.size();
+	}
+	
+	
 	public void remove(Enemigo e){
 		enemigos.remove(e);
 	}
@@ -211,7 +216,7 @@ public class Mapa {
 				if(getCelda(x, y).getObjeto(1)==null){
 					
 					puedo=true;
-					
+				
 					
 					switch(numero){
 					case 0:

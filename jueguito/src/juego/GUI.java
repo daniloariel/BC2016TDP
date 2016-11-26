@@ -214,7 +214,9 @@ public class GUI extends JFrame {
 		
 		if (JOptionPane.OK_OPTION == opcion){
 			this.dispose();
+			juego.terminar();
 			juego.reset();
+			
 		}
 	        else{
 	        	System.exit(0);	

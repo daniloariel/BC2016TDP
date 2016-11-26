@@ -14,6 +14,7 @@ public class MoverEnemigo implements Runnable{
 	
 	
 	public MoverEnemigo(Enemigo e,int s){
+		
 		enemigo = e;
 		t=new Thread(this);
 		sleep=s;
