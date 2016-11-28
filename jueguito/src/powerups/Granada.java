@@ -30,9 +30,12 @@ public class Granada extends PowerUp{
 			puntosTotales += e.getPuntos();
 			e.destruir();
 			mapa.getEnemigos().remove(e);
+			jug.getJuego().incEnemigosMuertos();
 			
 			}
 		jug.getJuego().sumarPuntos(puntosTotales);
+		
+		
 	}
 
 	@Override

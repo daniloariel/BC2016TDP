@@ -217,7 +217,7 @@ public class Mapa {
 					
 					puedo=true;
 				
-					
+					numero = 4;
 					switch(numero){
 					case 0:
 						power= new Timer(getCelda(x,y),x,y,this);

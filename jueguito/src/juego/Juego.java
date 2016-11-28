@@ -200,11 +200,16 @@ public class Juego implements Runnable{
 
 		while(!fin){
 			
+		if(cantEnemigosMuertosTotal>=16){
+				t.interrupt();
+				ganar();
+		}
+			
 		System.out.println(""+mapa.getEnemigos().size());
-		System.out.println(""+cantEnemigosMuertos);
+		System.out.println(""+cantEnemigosMuertosTotal);
 			if(mapa.cantidadEnemigos() < 4){
 				try{
-					t.sleep(2000);
+					Thread.sleep(2000);
 					}catch(InterruptedException e){e.printStackTrace();}
 				
 					mapa.agregarEnemigo();
@@ -218,10 +223,6 @@ public class Juego implements Runnable{
 			if (cantEnemigosMuertos>=4 ){
 				mapa.agregarPowerUp();
 				cantEnemigosMuertos = 0;
-			}
-			
-			if(cantEnemigosMuertosTotal==16){
-				ganar();
 			}
 		}
 				
