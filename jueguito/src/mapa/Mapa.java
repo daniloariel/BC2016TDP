@@ -206,7 +206,7 @@ public class Mapa {
 		Random r2 = new Random();
 		Random pw = new Random();
 		
-		int numero = pw.nextInt(5); 
+		int numero = pw.nextInt(6); 
 			while(!puedo){
 				
 				int x = r1.nextInt(21);
@@ -241,6 +241,7 @@ public class Mapa {
 					
 					setObjeto(power, x, y, power.getPos());
 					gui.add(power.getGrafico());
+					gui.repaint(); 
 				}
 				
 			}

@@ -23,8 +23,6 @@ public class Juego implements Runnable{
 	
 	private int cantEnemigosMuertosTotal;
 	
-	private boolean puse = false;
-	
 	public Juego (){
 		
 		fin = false;
@@ -53,7 +51,6 @@ public class Juego implements Runnable{
 		
 		t = new Thread(this);
 		t.start();
-		
 		gui.repaint();
 		gui.setVisible(true);
 	}
@@ -203,7 +200,8 @@ public class Juego implements Runnable{
 
 		while(!fin){
 			
-		System.out.println(""+mapa.getEnemigos().size());	
+		System.out.println(""+mapa.getEnemigos().size());
+		System.out.println(""+cantEnemigosMuertos);
 			if(mapa.cantidadEnemigos() < 4){
 				try{
 					t.sleep(2000);
@@ -217,15 +215,9 @@ public class Juego implements Runnable{
 				gameOver();
 			}
 			
-			if (cantEnemigosMuertosTotal % 4==0 && cantEnemigosMuertosTotal>0 && !puse){
+			if (cantEnemigosMuertos>=4 ){
 				mapa.agregarPowerUp();
-				System.out.println("agregue");
 				cantEnemigosMuertos = 0;
-				puse = true;
-			}
-			
-			if(cantEnemigosMuertos == 4){
-				puse = false;
 			}
 			
 			if(cantEnemigosMuertosTotal==16){
