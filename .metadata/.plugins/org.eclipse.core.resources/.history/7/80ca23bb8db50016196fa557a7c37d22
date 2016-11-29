@@ -1,0 +1,124 @@
+package tanques;
+import juego.*;
+import javax.swing.*;
+import disparo.DisparoJugador;
+import mapa.*;
+import visitor.*;
+
+public class Jugador extends Tanque{
+	
+	private Nivel nivel;
+	private Juego juego;
+    private int vidas; 
+	
+	private boolean invulnerable = false;
+	
+	
+	public Jugador(Celda c, int x , int y,Juego j){
+		super(c,x,y);
+		
+		juego = j;
+		
+		pos=0;
+		
+		vidas = 4;
+		
+		this.imagenes[0] = new ImageIcon(this.getClass().getResource("/sources/up.png"));
+		this.imagenes[1] = new ImageIcon(this.getClass().getResource("/sources/down.png"));
+		this.imagenes[2] = new ImageIcon(this.getClass().getResource("/sources/left.png"));
+		this.imagenes[3] = new ImageIcon(this.getClass().getResource("/sources/right.png"));
+		
+		grafico.setIcon(imagenes[0]);
+		
+		nivel = new Nivel1();
+		
+		resistencia = nivel.getResistencia();
+		velocidad = nivel.getVelocidad();
+		
+		
+		visitor = new VisitorJugador(this);
+	}
+	
+	
+	
+	public void subirNivel(){
+		nivel = nivel.subirNivel();
+		juego.getGUI().actualizarNivel();
+	}
+	
+	public Nivel getNivel (){
+		return nivel;
+	}
+	
+	public int getVidas(){
+		return vidas;
+	}
+	
+	public void setVidas(int v ){
+		vidas = v;
+	}
+	
+	public boolean aceptar(Visitor vis){
+		return vis.visitarJugador(this);
+	}
+	
+	public Juego getJuego(){
+		return juego;
+	}
+	
+	
+	
+	
+	public void disparar(){
+		new DisparoJugador(celda,x,y,this,gui,direccion,nivel.getVelocidadDisparo(),nivel.getDisparoSimultaneo());
+	}
+	
+	public void setVisitor(Visitor vis){
+		visitor = vis;
+	}
+	
+	public void setInvulnerable(){
+		new Invulnerable(this);
+	}
+	
+	public void setInvulnerable(boolean b){
+		invulnerable = b;
+	}
+	
+	public int recibirDisparo(){
+		if(!invulnerable){
+			if(nivel.getResistencia()==1){
+				perderVida();
+				juego.getGUI().reiniciarNiveles();
+			}
+				
+			else{
+				decrementarResistencia();
+				
+			}
+		}
+		return 0;
+	}
+	
+	private void decrementarResistencia(){
+		nivel.decrementarResistencia();
+	}
+	
+	public void perderVida(){
+		if(vidas>=1){
+			vidas--;
+			juego.modificarVida(true);
+			juego.reiniciarJugador();
+		}
+		else
+			this.destruir();
+		
+	}
+	
+	//publico por el power up de vida.
+	public void ganarVida(){
+		vidas++;
+		juego.modificarVida(false);
+	}
+
+}

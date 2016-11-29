@@ -1,0 +1,329 @@
+package mapa;
+
+
+
+import java.io.*;
+import powerups.*;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Random;
+
+import factoryenemigo.FabricaEnemigo;
+import factoryenemigo.FabricaEnemigoBlindado;
+import factoryenemigo.FabricaEnemigoDePoder;
+import obstaculos.*;
+import tanques.*;
+
+import juego.*;
+import factoryenemigo.*;
+public class Mapa {
+		
+	private Celda[][] M;
+	
+	private GUI gui;
+	
+	private LinkedList<Enemigo> enemigos;
+	
+	public Mapa(GUI gui){
+		M = new Celda[21][21];
+		
+		this.gui= gui;
+		
+		
+		
+		try{
+			
+			InputStream is = getClass().getResourceAsStream("/sources/mapa.txt");
+
+            InputStreamReader isr = new InputStreamReader(is);
+
+
+            BufferedReader br = new BufferedReader(isr);
+			
+			
+			
+						
+			String cadena;
+		
+		for(int i=0; i<21; i++){
+			cadena=br.readLine();
+			for(int j=0; j<21; j++){
+				if(cadena.charAt(j)=='v')
+					M[i][j]=new Celda(i,j,this);
+				if(cadena.charAt(j)=='l'){
+					Celda nueva = new Celda(i,j,this);
+					nueva.setObjeto(new Ladrillo(nueva,i,j), 1);
+					M[i][j]=nueva;
+				}
+				if(cadena.charAt(j)=='p'){
+					Celda nueva = new Celda(i,j,this);
+					nueva.setObjeto(new LadrilloPared(nueva,i,j), 1);
+					M[i][j]=nueva;
+				}
+				if(cadena.charAt(j)=='a'){
+					Celda nueva = new Celda(i,j,this);
+					nueva.setObjeto(new Agua(nueva,i,j), 1);
+					M[i][j]=nueva;
+				}
+				if (cadena.charAt(j)=='h'){
+					Celda nueva = new Celda (i,j,this);
+					nueva.setObjeto(new Acero(nueva,i,j), 1);
+					M[i][j]=nueva;
+				}
+				if(cadena.charAt(j)=='A'){
+					Celda nueva = new Celda(i,j,this);
+					nueva.setObjeto(new Aguila(nueva,i,j),1);
+					M[i][j] = nueva;
+				}
+				if(cadena.charAt(j)=='t'){
+					Celda nueva = new Celda(i,j,this);
+					nueva.setObjeto(new Arbol(nueva,i,j),1);
+					M[i][j]=nueva;
+				}
+			}
+		}
+		br.close();
+		}catch(IOException e){e.printStackTrace();}
+		
+		
+		enemigos = new LinkedList<Enemigo>();
+		
+		FabricaEnemigo basico = new FabricaEnemigoBasico();
+		enemigos.add(basico.crearEnemigo(M[1][1], 1, 1));
+		enemigos.add(basico.crearEnemigo(M[19][1],19 ,1 ));
+		enemigos.add(basico.crearEnemigo(M[18][1], 18, 1));
+		enemigos.add(basico.crearEnemigo(M[2][1], 2, 1));
+		
+		for(Enemigo e : enemigos){
+			gui.add(e.getGrafico());
+		}
+		
+		agregarPowerUp();
+	}
+	
+	
+	
+	public void setObjeto(GameObject obj, int x, int y,int pos){
+		M[x][y].setObjeto(obj, pos);
+	}
+	
+	public GameObject getObjeto(int x, int y ,int pos){
+		return M[x][y].getObjeto(pos);
+	}
+	
+	public Celda getCelda(int x, int y){
+		return M[x][y];
+	}
+	
+	public void agregarEnemigo(){
+		
+		FabricaEnemigo fabrica;	
+		Enemigo enemigo;
+		
+		boolean puedo = false;
+		while(!puedo){
+			
+			Random a = new Random ();
+			Random b = new Random();
+			
+			Random rnd = new Random();
+			
+			int posx = a.nextInt(21);
+			int posy = b.nextInt(21);
+			
+			int tipo = rnd.nextInt(4);
+			
+			
+			
+			if(M[posx][posy].getObjeto(1)==null && M[posx][posy].getObjeto(0)==null){
+				
+				puedo=true;
+				
+			
+				
+			    switch(tipo){
+			
+			    	case 0: fabrica = new FabricaEnemigoBasico();
+			    			enemigo = fabrica.crearEnemigo(M[posx][posy], posx, posy);
+			    			enemigos.add(enemigo);
+			    			gui.add(enemigo.getGrafico());
+			    			break;
+			    			
+			    	case 1: fabrica = new FabricaEnemigoDePoder();
+			    			enemigo = fabrica.crearEnemigo(M[posx][posy], posx, posy);
+			    			enemigos.add(enemigo);
+			    			gui.add(enemigo.getGrafico());
+			    			break;
+	    					
+			    	case 2:	fabrica = new FabricaEnemigoBlindado();
+							enemigo = fabrica.crearEnemigo(M[posx][posy], posx, posy);
+							enemigos.add(enemigo);
+							gui.add(enemigo.getGrafico());
+							break;
+							
+					case 3:	fabrica = new FabricaEnemigoRapido();
+	    					enemigo = fabrica.crearEnemigo(M[posx][posy], posx, posy);
+	    					enemigos.add(enemigo);
+	    					gui.add(enemigo.getGrafico());
+	    					break;
+			    }
+			}
+		}
+	}
+	
+	
+	
+	public LinkedList<Enemigo> getEnemigos(){
+		return enemigos;
+	}
+	
+	public int cantidadEnemigos(){
+		return enemigos.size();
+	}
+	
+	
+	public void remove(Enemigo e){
+		enemigos.remove(e);
+	}
+	
+	public int nroFilas(){
+		return M.length;
+	}
+	
+	public int nroColumnas(){
+		return M[0].length;
+	}
+	
+	public GUI getGUI(){
+		return gui;
+	}
+	
+	public void agregarPowerUp(){
+		PowerUp power=null;
+		
+		boolean puedo=false;
+		Random r1 = new Random();
+		Random r2 = new Random();
+		Random pw = new Random();
+		
+		int numero = pw.nextInt(6); 
+			while(!puedo){
+				
+				int x = r1.nextInt(21);
+				int y = r2.nextInt(21);
+				
+			
+				if(getCelda(x, y).getObjeto(1)==null){
+					
+					puedo=true;
+				
+					
+					switch(numero){
+					case 0:
+						power= new Timer(getCelda(x,y),x,y,this);
+						break;
+					case 1:
+						power= new Casco(getCelda(x,y),x,y,this);
+						break;
+					case 2:
+						power= new Estrella(getCelda(x,y),x,y,this);
+						break;
+					case 3: 
+						power= new Pala(getCelda(x,y),x,y,this);
+						break;
+					case 4: 
+						power= new Granada(getCelda(x,y),x,y,this);
+						break;
+					case 5:
+						power= new Tank(getCelda(x,y),x,y,this);
+						break;
+					}
+					
+					setObjeto(power, x, y, power.getPos());
+					gui.add(power.getGrafico());
+					gui.repaint(); 
+				}
+				
+			}
+		
+	}
+		
+		
+	
+	public void baseAcero(){
+		
+		
+		if(M[9][19].getObjeto(1)!=null)
+			M[9][19].getObjeto(1).destruir();
+		
+		if(M[9][18].getObjeto(1)!=null)		
+			M[9][18].getObjeto(1).destruir();
+		
+		if(M[10][18].getObjeto(1)!=null)
+			M[10][18].getObjeto(1).destruir();
+		
+		if(M[11][18].getObjeto(1)!=null)
+			M[11][18].getObjeto(1).destruir();
+		
+		if(M[11][19].getObjeto(1)!=null)
+			M[11][19].getObjeto(1).destruir();
+		
+		
+		
+		
+		M[9][19].setObjeto(new Acero(M[9][19],9,19),1);
+		M[9][18].setObjeto(new Acero(M[9][18],9,18),1);
+		
+		M[10][18].setObjeto(new Acero(M[10][18],10,18),1);
+		
+		M[11][18].setObjeto(new Acero(M[11][18],11,18),1);
+		M[11][19].setObjeto(new Acero(M[11][19],11,19),1);
+		
+		gui.add(M[9][19].getObjeto(1).getGrafico());
+		gui.add(M[9][18].getObjeto(1).getGrafico());
+		gui.add(M[10][18].getObjeto(1).getGrafico());
+		gui.add(M[11][18].getObjeto(1).getGrafico());
+		gui.add(M[11][19].getObjeto(1).getGrafico());
+		
+		gui.repaint();
+	}
+	
+	public void baseLadrillo(){
+		
+		if(M[9][19].getObjeto(1)!=null)
+			M[9][19].getObjeto(1).destruir();
+		
+		if(M[9][18].getObjeto(1)!=null)		
+			M[9][18].getObjeto(1).destruir();
+		
+		if(M[10][18].getObjeto(1)!=null)
+			M[10][18].getObjeto(1).destruir();
+		
+		if(M[11][18].getObjeto(1)!=null)
+			M[11][18].getObjeto(1).destruir();
+		
+		if(M[11][19].getObjeto(1)!=null)
+			M[11][19].getObjeto(1).destruir();
+		
+		
+		
+		
+		M[9][19].setObjeto(new Ladrillo(M[9][19],9,19),1);
+		M[9][18].setObjeto(new Ladrillo(M[9][18],9,18),1);
+		
+		M[10][18].setObjeto(new Ladrillo(M[10][18],10,18),1);
+		
+		M[11][18].setObjeto(new Ladrillo(M[11][18],11,18),1);
+		M[11][19].setObjeto(new Ladrillo(M[11][19],11,19),1);
+		
+		gui.add(M[9][19].getObjeto(1).getGrafico());
+		gui.add(M[9][18].getObjeto(1).getGrafico());
+		gui.add(M[10][18].getObjeto(1).getGrafico());
+		gui.add(M[11][18].getObjeto(1).getGrafico());
+		gui.add(M[11][19].getObjeto(1).getGrafico());
+		
+		gui.repaint();
+		
+	}
+
+}
